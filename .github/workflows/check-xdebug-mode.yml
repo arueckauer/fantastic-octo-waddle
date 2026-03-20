@@ -1,0 +1,25 @@
+name: Check Xdebug Mode
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  check-settings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+          ini-values: date.timezone=Europe/Zurich
+
+      - name: Check Xdebug Mode
+        run: |
+          php -r "echo 'Xdebug Mode: ' . ini_get('xdebug.mode') . PHP_EOL;"
